@@ -169,37 +169,50 @@ class LinkedList {
             // Assignment: nextNode = curr.next before breaking the link.
             let nextNode = null;
 
-            let count = 0;
+            let tracker = curr;
+            for (let i = 1; i < k; i++) {
+                if (tracker === null) {
+                    break;
+                }
+                tracker = tracker?.next;
+            }
 
             // Reverse the nodes in the current group
-            while (curr !== null && count < k) {
-                nextNode = curr.next;
-                curr.next = prev;
-                prev = curr;
-                curr = nextNode;
-                count++;
-            }
+            if (tracker !== null) {
+                let count = 0;
+                while (curr !== null && count < k) {
+                    nextNode = curr.next;
+                    curr.next = prev;
+                    prev = curr;
+                    curr = nextNode;
+                    count++;
+                }
 
-            // This captures the new head of the list after the first group is reversed.
-            if (newHead === null) {
-                newHead = prev;
-            }
+                // This captures the new head of the list after the first group is reversed.
+                if (newHead === null) {
+                    newHead = prev;
+                }
 
-            // This connects the last node of the previous group to the first node of the current reversed group.
-            if (tail !== null) {
-                tail.next = prev;
-            }
+                // This connects the last node of the previous group to the first node of the current reversed group.
+                if (tail !== null) {
+                    tail.next = prev;
+                }
 
-            // This updates the tail to be the last node of the current group (after reversal).
-            tail = groupHead;
+                // This updates the tail to be the last node of the current group (after reversal).
+                tail = groupHead;
+            } else {
+                if(tail !== null) tail.next = curr
+                while (curr) {
+                    curr = curr.next
+                }
+            }
         }
-
         this.head = newHead;
     }
 }
 
 const list = new LinkedList();
-list.append(1).append(2).append(3).append(4).append(5).append(6);
+list.append(1).append(2).append(3).append(4).append(5);
 // list.prepend(5); // Add 5 to the beginning
 
 // list.print(); // Output: 5, 10, 20
