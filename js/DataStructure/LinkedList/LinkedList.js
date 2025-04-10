@@ -202,9 +202,7 @@ class LinkedList {
                 tail = groupHead;
             } else {
                 if(tail !== null) tail.next = curr
-                while (curr) {
-                    curr = curr.next
-                }
+                while (curr) curr = curr.next
             }
         }
         this.head = newHead;
