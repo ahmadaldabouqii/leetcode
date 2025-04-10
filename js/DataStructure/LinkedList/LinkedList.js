@@ -111,6 +111,19 @@ class LinkedList {
         this.size--;
     }
 
+    findMiddleNode() {
+        if (this.size <= 1) return this.head?.data ?? null;
+
+        let loop = Math.ceil(this.size / 2);
+        let curr = this.head;
+
+        while (loop !== 1) {
+            curr = curr.next;
+            loop--;
+        }
+        console.log('Middle Node:', curr?.data)
+    }
+
     reverse() {
         // Points to the previous node
         let previous = null;
@@ -220,6 +233,8 @@ list.append(1).append(2).append(3).append(4).append(5);
 // list.insertAt(22, 1)
 // list.deleteAt(1)
 // list.reverse(); // Output: 5, 20
-list.reverseInGroups(3); // Output: 5, 20
+// list.reverseInGroups(3); // Output: 5, 20
+console.log("============= Middle Node =============")
+list.findMiddleNode();
 console.log("============= print =============")
 list.print(); // Output: 5, 20
