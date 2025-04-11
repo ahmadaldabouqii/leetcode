@@ -112,16 +112,28 @@ class LinkedList {
     }
 
     findMiddleNode() {
-        if (this.size <= 1) return this.head?.data ?? null;
+        /*
+            if (this.size <= 1) return this.head?.data ?? null;
 
-        let loop = Math.ceil(this.size / 2);
-        let curr = this.head;
+            let loop = Math.ceil(this.size / 2);
+            let curr = this.head;
 
-        while (loop !== 1) {
-            curr = curr.next;
-            loop--;
+            while (loop !== 1) {
+                curr = curr.next;
+                loop--;
+            }
+        */
+
+        let slow = this.head;
+        let fast = this.head;
+
+        while (fast !== null && fast.next !== null) {
+            fast = fast.next.next;
+            slow = slow.next;
         }
-        console.log('Middle Node:', curr?.data)
+
+        console.log('Middle Node:', slow?.data)
+        return slow;
     }
 
     reverse() {
@@ -220,10 +232,56 @@ class LinkedList {
         }
         this.head = newHead;
     }
+
+    mergeTwoLists(list1, list2) {
+        // At this point, dummy and curr are two separate variables that both point
+        // to the same Node object in memory, this Node has value 0 and next is null.
+        let dummy = new Node(0);
+        let curr = dummy;
+
+        list1 = list1.head
+        list2 = list2.head
+
+        while(list1 && list2) {
+            if(list1.data < list2.data) {
+                curr.next = list1;
+                console.log('Before: ', list1)
+                list1 = list1.next;
+                console.log('After: ', list1)
+            } else {
+                curr.next = list2;
+                list2 = list2.next;
+            }
+            curr = curr.next;
+        }
+
+        if(list1) curr.next = list1;
+        if(list2) curr.next = list2;
+        // console.log('result: ', dummy.next)
+        return dummy.next;
+    }
 }
 
+/*
+ *
+ * Explain dummy pattern in linkedList
+ *
+ */
+let obj = { value: 0, next: null };
+
+// Create two variables pointing to the **same object**
+let a = obj;
+let b = a;
+
+// Now modify the object using variable b
+b.next = { value: 5, next: null };
+
+// Even though we only modified through b, a sees the change too
+console.log(a.next.value); // This will print 5
+/***************************************************************/
+
 const list = new LinkedList();
-list.append(1).append(2).append(3).append(4).append(5);
+// list.append(1).append(2).append(3).append(4).append(5);
 // list.prepend(5); // Add 5 to the beginning
 
 // list.print(); // Output: 5, 10, 20
@@ -234,7 +292,16 @@ list.append(1).append(2).append(3).append(4).append(5);
 // list.deleteAt(1)
 // list.reverse(); // Output: 5, 20
 // list.reverseInGroups(3); // Output: 5, 20
-console.log("============= Middle Node =============")
-list.findMiddleNode();
-console.log("============= print =============")
-list.print(); // Output: 5, 20
+// console.log("============= Middle Node =============")
+// list.findMiddleNode();
+// console.log("============= print =============")
+// list.print(); // Output: 5, 20
+
+
+const list_1 = new LinkedList();
+list_1.append(1).append(3).append(5);
+
+const list_2 = new LinkedList();
+list_2.append(2).append(4).append(6);
+
+list.mergeTwoLists(list_1, list_2)
