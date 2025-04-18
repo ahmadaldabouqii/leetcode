@@ -261,33 +261,47 @@ class LinkedList {
         // console.log('result: ', dummy.next)
         return dummy.next;
     }
+
+    deleteDuplicates() {
+        let curr = this.head;
+
+        while (curr) {
+            if (curr.data === curr.next?.data) {
+                curr.next = curr.next.next;
+            } else {
+                curr = curr.next;
+            }
+        }
+
+        console.log(this.print())
+        return this.head;
+    };
 }
 
 /*
  *
- * Explain dummy pattern in linkedList
+ * Explain a dummy pattern in linkedList
  *
- */
-let dummy = { value: 0, next: null };
 
+let dummy = { value: 0, next: null };
 // point curr to the same object
 let curr = dummy;
-
-// add a new node using curr
+// add a new node using curr.
 curr.next = { value: 10, next: null };
-
 // move curr forward
 curr = curr.next;
-
 // add another node
 curr.next = { value: 20, next: null };
-
 // Show the full list starting from dummy
 console.log(JSON.stringify(dummy, null, 2));
+ */
 /***************************************************************/
 
 const list = new LinkedList();
-// list.append(1).append(2).append(3).append(4).append(5);
+// list.append(1).append(1).append(3).append(4).append(4);
+list.append(1).append(1).append(2).append(3).append(4).append(4);
+list.deleteDuplicates();
+
 // list.prepend(5); // Add 5 to the beginning
 
 // list.print(); // Output: 5, 10, 20
@@ -304,10 +318,10 @@ const list = new LinkedList();
 // list.print(); // Output: 5, 20
 
 
-const list_1 = new LinkedList();
-list_1.append(1).append(3).append(5);
-
-const list_2 = new LinkedList();
-list_2.append(2).append(4).append(6);
-
-list.mergeTwoLists(list_1, list_2)
+// const list_1 = new LinkedList();
+// list_1.append(1).append(3).append(5);
+//
+// const list_2 = new LinkedList();
+// list_2.append(2).append(4).append(6);
+//
+// list.mergeTwoLists(list_1, list_2)
