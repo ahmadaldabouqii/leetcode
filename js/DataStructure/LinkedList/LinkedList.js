@@ -234,8 +234,11 @@ class LinkedList {
     }
 
     mergeTwoLists(list1, list2) {
-        // At this point, dummy and curr are two separate variables that both point
-        // to the same Node object in memory, this Node has value 0 and next is null.
+        /*
+        *
+        * At this point, dummy and curr are two separate variables that both point
+        * to the same Node object in memory, this Node has value 0 and next is null.
+        */
         let dummy = new Node(0);
         let curr = dummy;
 
@@ -245,9 +248,7 @@ class LinkedList {
         while(list1 && list2) {
             if(list1.data < list2.data) {
                 curr.next = list1;
-                console.log('Before: ', list1)
                 list1 = list1.next;
-                console.log('After: ', list1)
             } else {
                 curr.next = list2;
                 list2 = list2.next;
@@ -267,17 +268,22 @@ class LinkedList {
  * Explain dummy pattern in linkedList
  *
  */
-let obj = { value: 0, next: null };
+let dummy = { value: 0, next: null };
 
-// Create two variables pointing to the **same object**
-let a = obj;
-let b = a;
+// point curr to the same object
+let curr = dummy;
 
-// Now modify the object using variable b
-b.next = { value: 5, next: null };
+// add a new node using curr
+curr.next = { value: 10, next: null };
 
-// Even though we only modified through b, a sees the change too
-console.log(a.next.value); // This will print 5
+// move curr forward
+curr = curr.next;
+
+// add another node
+curr.next = { value: 20, next: null };
+
+// Show the full list starting from dummy
+console.log(JSON.stringify(dummy, null, 2));
 /***************************************************************/
 
 const list = new LinkedList();
