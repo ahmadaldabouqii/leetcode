@@ -276,11 +276,53 @@ class LinkedList {
         console.log(this.print())
         return this.head;
     };
+
+    hasCycle() {
+        let slow = this.head;
+        let fast = this.head;
+
+        while (fast !== null && fast.next !== null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow === fast) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    // find the start of the cycle
+     detectCycle() {
+        let slow = this.head;
+        let fast = this.head;
+
+        // Step 1: Detect cycle
+        while (fast && fast.next) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow === fast) {
+                // Step 2: Find cycle start
+                // Resetting one pointer to the head and advancing both at the same speed ->
+                // guarantees they meet at the cycle’s entry point.
+                slow = this.head;
+                while (slow !== fast) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                // this is the start of the cycle
+                return slow.data;
+            }
+        }
+        // no cycle
+        return null;
+    }
 }
 
 /*
  *
- * Explain a dummy pattern in linkedList
+ * Explain a dummy pattern in the linkedList
  *
 
 let dummy = { value: 0, next: null };
@@ -299,8 +341,8 @@ console.log(JSON.stringify(dummy, null, 2));
 
 const list = new LinkedList();
 // list.append(1).append(1).append(3).append(4).append(4);
-list.append(1).append(1).append(2).append(3).append(4).append(4);
-list.deleteDuplicates();
+// list.append(1).append(1).append(2).append(3).append(4).append(4);
+// list.deleteDuplicates();
 
 // list.prepend(5); // Add 5 to the beginning
 
@@ -325,3 +367,16 @@ list.deleteDuplicates();
 // list_2.append(2).append(4).append(6);
 //
 // list.mergeTwoLists(list_1, list_2)
+
+
+///////////////// linked list cycle ///////////////////////////////////
+list.append(1).append(2).append(3).append(4).append(5);
+// Create a cycle: make the next of the last node (4) point to node 2
+let secondNode = list.head.next; // node with data = 2
+let tail = list.head;
+while (tail.next !== null) {
+    tail = tail.next;
+}
+tail.next = secondNode; // Creating the cycle
+console.log(list.hasCycle())
+console.log(list.detectCycle())
