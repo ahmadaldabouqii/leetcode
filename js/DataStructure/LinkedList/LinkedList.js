@@ -317,6 +317,48 @@ class LinkedList {
         }
         // no cycle
         return null;
+     }
+
+    isPalindrome() {
+        let head = this.head;
+
+        if (!head || !head.next) {
+            console.log('Empty or single node list is a palindrome');
+            return true;
+        }
+
+        // Find the middle node
+        let slow = head;
+        let fast = head;
+
+        while (fast && fast.next) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        // Reverse the second half
+        let prev = null;
+        let current = slow;
+
+        while (current) {
+            let next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        // Compare first half with reversed second half
+        let firstHalfPointer = head;
+        let secondHalfPointer = prev; // head of reversed second half
+        while (secondHalfPointer) {
+            if (firstHalfPointer.data !== secondHalfPointer.data) {
+                return false;
+            }
+            firstHalfPointer = firstHalfPointer.next;
+            secondHalfPointer = secondHalfPointer.next;
+        }
+
+        return true;
     }
 }
 
@@ -370,13 +412,17 @@ const list = new LinkedList();
 
 
 ///////////////// linked list cycle ///////////////////////////////////
-list.append(1).append(2).append(3).append(4).append(5);
-// Create a cycle: make the next of the last node (4) point to node 2
-let secondNode = list.head.next; // node with data = 2
-let tail = list.head;
-while (tail.next !== null) {
-    tail = tail.next;
-}
-tail.next = secondNode; // Creating the cycle
-console.log(list.hasCycle())
-console.log(list.detectCycle())
+// list.append(1).append(2).append(3).append(4).append(5);
+// // Create a cycle: make the next of the last node (4) point to node 2
+// let secondNode = list.head.next; // node with data = 2
+// let tail = list.head;
+// while (tail.next !== null) {
+//     tail = tail.next;
+// }
+// tail.next = secondNode; // Creating the cycle
+// console.log(list.hasCycle())
+// console.log(list.detectCycle())
+
+///////////////////////  palindrome  //////////////////////////////////
+list.append(1).append(2).append(2).append(1);
+list.isPalindrome();
