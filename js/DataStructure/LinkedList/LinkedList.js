@@ -360,6 +360,24 @@ class LinkedList {
 
         return true;
     }
+
+    removeElements(val) {
+        if (! this.head) return this.head;
+
+        const dummy = new Node(0);
+        dummy.next = this.head;
+
+        let curr = dummy;
+
+        while (curr.next !== null) {
+            if (curr.next.data === val) {
+                curr.next = curr.next.next;
+            } else {
+                curr = curr.next;
+            }
+        }
+        return dummy.next;
+    }
 }
 
 /*
@@ -424,5 +442,11 @@ const list = new LinkedList();
 // console.log(list.detectCycle())
 
 ///////////////////////  palindrome  //////////////////////////////////
-list.append(1).append(2).append(2).append(1);
-list.isPalindrome();
+// list.append(1).append(2).append(2).append(1);
+// list.isPalindrome();
+
+///////////////////////  Remove Linked List Elements  //////////////////////////////////
+list.append(1).append(2).append(6).append(3).append(4).append(5).append(6);
+list.removeElements(6);
+// [1,2,6,3,4,5,6]
+
