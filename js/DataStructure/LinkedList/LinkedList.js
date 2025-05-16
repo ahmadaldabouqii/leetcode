@@ -277,6 +277,32 @@ class LinkedList {
         return this.head;
     };
 
+    deleteDuplicates_2() {
+        let dummy = new Node(0);
+        dummy.next = this.head;
+
+        let prev = dummy;
+        let curr = this.head;
+
+        while (curr) {
+            if (curr.next && curr.data === curr.next.data) {
+                // Skip all duplicates
+                while (curr.next && curr.data === curr.next.data) {
+                    curr = curr.next;
+                }
+                // Remove all duplicates
+                prev.next = curr.next;
+            } else {
+                prev = curr;
+            }
+            curr = curr.next;
+        }
+
+        this.head = dummy.next;
+        console.log(this.print())
+        return this.head;
+    };
+
     hasCycle() {
         let slow = this.head;
         let fast = this.head;
@@ -446,7 +472,11 @@ const list = new LinkedList();
 // list.isPalindrome();
 
 ///////////////////////  Remove Linked List Elements  //////////////////////////////////
-list.append(1).append(2).append(6).append(3).append(4).append(5).append(6);
-list.removeElements(6);
+// list.append(1).append(2).append(6).append(3).append(4).append(5).append(6);
+// list.removeElements(6);
 // [1,2,6,3,4,5,6]
 
+///////////////////////  Delete Duplicates from Sorted List ||  //////////////////////////////////
+list.append(1).append(2).append(3).append(3).append(4).append(4).append(5);
+// list.append(1).append(1).append(1).append(2).append(3);
+list.deleteDuplicates_2();
