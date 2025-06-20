@@ -1,8 +1,27 @@
 /*
 *
 * Recursive Approach (Bonus)
+* Recursion is a function calls itself to solve a smaller version of a problem until it reaches a base case.
 *
+* 🧠 How Recursion Works (Behind the Scenes)?
+* Every recursive call is added to the call stack, and JavaScript remembers where it left off for each one.
+* Call stack trace:
+** countDown(3) → waits for countDown(2)
+** countDown(2) → waits for countDown(1)
+** countDown(1) → waits for countDown(0)
+** countDown(0) → hits base case → returns
+** Then each one returns in reverse.
+*
+* 🌲 What is a Recursion Tree?
+* a visual way to understand how recursive calls branch out.
 * */
+function countDown(n) {
+    if (n === 0) return;
+    console.log('count: ', n);
+    return countDown(--n); // or n - 1
+}
+countDown(3);
+
 function reverseArray(arr, start = 0, end = arr.length - 1) {
     if (start >= end) return arr; // Base case
 
@@ -23,8 +42,7 @@ function factorial(n) {
     // Recursive case: n! = n * (n-1)!
     return n * factorial(n - 1);
 }
-
-console.log(factorial(2)); // Output: 120
+console.log(factorial(5)); // Output: 120
 /*
 * factorial(5)
     return 5 * factorial(4)
@@ -46,7 +64,6 @@ function sum(n) {
     return n + sum(n - 1);
 }
 console.log(sum(5)); // Output: 15
-
 /*
 * sum(5)
     return 5 + sum(4)
@@ -83,3 +100,17 @@ return fibonacci(5) + fibonacci(4)
     return 3 + 2 = 5
 return 5 + 3 = 8
 * */
+
+// Using normal recursion
+function sumArrayValues(arr) {
+    if (arr.length === 0) return 0;
+    return arr[0] + sumArrayValues(arr.slice(1));
+}
+console.log(sumArrayValues([1, 2, 3, 1, 1]));
+
+// Using Tail recursion
+function sumArrayValuesTail(arr, acc = 0) {
+    if (arr.length === 0) return acc;
+    return sumArrayValuesTail(arr.slice(1), acc + arr[0]);
+}
+console.log(sumArrayValuesTail([1, 2, 3, 1, 2]));
